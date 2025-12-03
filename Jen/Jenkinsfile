@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    triggers {
+        githubPush()  // triggers on GitHub push
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/NotMeliodas/Jenkins', branch: 'main'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Building the project..."
+                // Add your build commands here
+            }
+        }
+    }
+
+    post {
+        always {
+            emailext(
+                to: 'zeadadel600@gmail.com',
+                subject: "Build #${env.BUILD_NUMBER} of ${env.JOB_NAME} - ${currentBuild.currentResult}",
+                body: """
+                    Hello,
+
+                    The build ${env.BUILD_NUMBER} of project ${env.JOB_NAME} has completed with status: ${currentBuild.currentResult}.
+
+                    Build URL: ${env.BUILD_URL}
+                """
+            )
+        }
+    }
+}
