@@ -30,6 +30,8 @@ pipeline {
 
                     The build ${env.BUILD_NUMBER} of project ${env.JOB_NAME} has completed with status: ${currentBuild.currentResult}.
 
+                    Done by Faya & Zeyad.
+
                     Build URL: ${env.BUILD_URL}
                 """
             )
